@@ -36,6 +36,7 @@ def get_site_scene(
     explicitly_calculate_polyhedra_hull: bool = False,
     bond_radius: float = 0.1,
     draw_magmoms: bool = True,
+    draw_magmoms_seq: bool = True,
     magmom_scale: float = 1.0,
     legend: Optional[Legend] = None,
 ) -> Scene:
@@ -120,7 +121,10 @@ def get_site_scene(
 
         # Add magmoms
         if draw_magmoms:
-            if magmom := self.properties.get("magmom"):
+            # if magmom := self.properties.get("magmom"):
+            magmom = self.properties.get("magmom", {})
+
+            if magmom:
                 # enforce type
                 magmom = np.array(Magmom(magmom).get_moment())
                 magmom = 2 * magmom_scale * max_radius * magmom
@@ -130,6 +134,32 @@ def get_site_scene(
                 arrow = Arrows(
                     positionPairs=[[tail, head]],
                     color="red",
+                    radius=0.20,
+                    headLength=0.5,
+                    headWidth=0.4,
+                    clickable=True,
+                )
+                magmoms.append(arrow)
+
+        # Add magmom sequence
+        if draw_magmoms_seq:
+            magmom_seq = self.properties.get("magmom_seq", {})
+
+            for i,d in enumerate(magmom_seq):
+
+                magmom = d["magmom"]
+                color = d["color"]
+
+                # enforce type
+                magmom = np.array(Magmom(magmom).get_moment())
+                magmom = 2 * magmom_scale * max_radius * magmom
+                tail = np.array(position) - 0.5 * np.array(magmom)
+                head = np.array(position) + 0.5 * np.array(magmom)
+
+                arrow = Arrows(
+                    positionPairs=[[tail, head]],
+                    color=color,
+                    opacity=0.5,
                     radius=0.20,
                     headLength=0.5,
                     headWidth=0.4,

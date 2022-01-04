@@ -523,6 +523,7 @@ class Arrows(Primitive):
     positionPairs: List[List[List[float]]]
     _animate: Optional[List[List[List[float]]]] = None
     color: Optional[str] = None
+    opacity: Optional[float] = None
     radius: Optional[float] = None
     headLength: Optional[float] = None
     headWidth: Optional[float] = None

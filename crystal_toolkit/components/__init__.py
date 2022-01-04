@@ -5,7 +5,7 @@ register_cache = MPComponent.register_cache
 register_crystal_toolkit = MPComponent.register_crystal_toolkit
 crystal_toolkit_layout = MPComponent.crystal_toolkit_layout
 
-from crystal_toolkit.components.search import SearchComponent
+# from crystal_toolkit.components.search import SearchComponent
 from crystal_toolkit.components.structure import StructureMoleculeComponent
 
 from crystal_toolkit.components.robocrys import RobocrysComponent
